@@ -1,0 +1,13 @@
+<div *ngFor="let filterValue of filterValues">
+    <div *ngIf="multiple">
+        <input type="checkbox" (change)="updateFilter(filterValue)"/>
+        {{filterValue.label}}
+        <span *ngIf="showCount">({{filterValue.count}})</span>
+    </div>
+
+    <a *ngIf="!multiple" href="javascript:void(0)"
+       [style.font-weight]="filterValue.selected ? 'bold' : 'normal'" (click)="updateFilter(filterValue)">
+        {{filterValue.label}}
+        <span *ngIf="showCount">({{filterValue.count}})</span>
+    </a>
+</div>

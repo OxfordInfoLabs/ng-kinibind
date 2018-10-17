@@ -1,0 +1,83 @@
+<header class="navbar">
+
+    <section class="navbar-center">
+
+        <a href="#action" class="btn btn-link">Action</a>
+        <a href="#bind" class="btn btn-link">Bind</a>
+        <a href="#bindSave" class="btn btn-link">Bind Save</a>
+        <a href="#filter" class="btn btn-link">Filter</a>
+        <a href="#filterElement" class="btn btn-link">Filter Element</a>
+        <a href="#forms" class="btn btn-link">Forms</a>
+        <a href="#validators" class="btn btn-link">Validators</a>
+
+    </section>
+
+</header>
+
+<div class="container">
+
+
+    <div id="action">
+
+        <h1>Action</h1>
+
+
+
+    </div>
+
+    <div id="bind">
+
+        <h1>Bind</h1>
+
+
+
+        <kb-bind getSource="https://jsonplaceholder.typicode.com/users" [model]="bindModel">
+            <dl *ngFor="let user of bindModel.results">
+                <dt>{{user.name}}</dt>
+                <dd>{{user.email}} <span class="label label-rounded label-primary">{{user.website}}</span></dd>
+            </dl>
+        </kb-bind>
+
+    </div>
+
+    <div id="bindSave">
+
+        <h1>Bind Save</h1>
+
+
+
+    </div>
+
+    <div id="filter">
+
+        <h1>Filter</h1>
+
+
+
+    </div>
+
+    <div id="filterElement">
+
+        <h1>Filter Element</h1>
+
+
+
+    </div>
+
+    <div id="forms">
+
+        <h1>Forms</h1>
+
+
+
+    </div>
+
+    <div id="validators">
+
+        <h1>Validators</h1>
+
+
+
+    </div>
+
+</div>
