@@ -20,13 +20,49 @@ imports: [
 ### Components & Directives
 
 #### Action
-* _coming soon_
-
-#### Bind
-Simple AJAX request directive, designed to for rapid binding of simple AJAX requests in the view. Useful for rapid development or prototyping when simple structures need to be bound to the view.
+Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.
 
 ##### Example
 ___
+
+##### Properties
+* actionURL (string) - the URL that the request should be made against.
+* method (string) - the method type used in the request
+* actionParams (? object) - any parameters that should be sent with the request as POST params.
+
+##### Events
+* started - fires when the action begins
+* completed - fires when the action has finished
+* error - fires if there was an error making the request
+
+###### Full example
+
+```html
+<button kbAction actionURL="/endpoint/users/1" method="DELETE" 
+        (started)="isLoading = true" (completed)="reloadUsers()" (error)="userError = true"> 
+        Delete User 1 
+</button>
+```
+
+
+#### Bind
+Simple AJAX request directive, designed for rapid binding of simple AJAX requests in the view. Useful for rapid development or prototyping when simple structures need to be bound to the view.
+
+##### Example
+___
+
+##### Properties
+* source (string) - the URL of the request
+* method (string) - the method type used in the request
+* model (KinibindModel) - the model to bind the results to
+* sourceParams (? object) - any parameters that should be sent with the request as POST params.
+* withCredentials (? boolean) - whether the http request should also set withCredentials (defaults to false)
+* reloadTrigger (? Observable) - changes to this observable will cause a reload of the http request and fetch new data.
+
+##### Events
+* onLoad - fires if the request completes successfully
+* onLoadError - fires if there was an error making the http request
+
 
 In your component.ts create an instance KinibindModel object.
 ```typescript
@@ -52,7 +88,7 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 |String|`bindModel.value`|
 |Number|`bindModel.value`|
 
-Final result
+###### Full example
 
 ```html
 <kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel">

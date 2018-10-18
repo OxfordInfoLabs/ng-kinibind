@@ -17,11 +17,28 @@
 <div class="container">
 
 
-    <div id="action">
+    <div class="doc" id="action">
 
         <h1>Action</h1>
+        <p>Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.</p>
 
+        <div class="doc-container">
+            <p><span class="label label-primary">Example</span></p>
 
+            <p>Use the following mark to perform an action when the button gets clicked. <br>
+
+                <code>
+                    &lt;button kbAction actionURL="/endpoint/users/1" method="DELETE"
+                            (started)="isLoading = true"
+                            (completed)="reloadUsers()"
+                            (error)="userError = true"&gt;
+                        Delete User 1
+                    &lt;/button&gt;
+                </code>
+
+            </p>
+
+        </div>
 
     </div>
 
