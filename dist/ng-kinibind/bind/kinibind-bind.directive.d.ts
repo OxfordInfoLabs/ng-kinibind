@@ -45,7 +45,7 @@ export declare class KinibindBindDirective implements OnInit {
     private http;
     private kbRequest;
     url: string;
-    getURL: string;
+    method: string;
     sourceParams: any;
     data: KinibindModel;
     withCredentials: boolean;

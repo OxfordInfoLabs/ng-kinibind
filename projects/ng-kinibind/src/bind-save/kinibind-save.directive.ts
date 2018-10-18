@@ -48,8 +48,7 @@ export class KinibindSaveDirective implements OnInit {
 
     @Input('model') model: KinibindModel;
     @Input('store') storeURL: string;
-    @Input('storeParams') storeParams: any;
-    @Input('storeObjectParam') storeObjectParam: string;
+    @Input('method') method: string;
     @Input('savedRoute') savedRoute: string;
     @Input('withCredentials') withCredentials: boolean;
 
@@ -71,17 +70,24 @@ export class KinibindSaveDirective implements OnInit {
     }
 
     private save() {
-        const postParams: any = this.storeParams || {};
+        let postParams: any;
 
         if (this.model) {
             if (this.model.results.length > 0) {
-                postParams[this.storeObjectParam || 'results'] = this.model.results;
+                postParams = this.model.results;
             } else if (this.model.item) {
-                postParams[this.storeObjectParam || 'object'] = this.model.item;
+                postParams = this.model.item;
             }
         }
 
-        this.kbRequest.makePostRequest(this.storeURL, postParams).toPromise()
+        const method = this.method || 'POST';
+
+        this.kbRequest.makeRequest(method, this.storeURL,
+            {
+                withCredentials: this.withCredentials || false,
+                params: postParams
+            })
+            .toPromise()
             .then(results => {
 
                 if (this.savedRoute) {

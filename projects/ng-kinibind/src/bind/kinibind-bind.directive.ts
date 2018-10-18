@@ -56,7 +56,7 @@ import { catchError } from 'rxjs/operators';
 export class KinibindBindDirective implements OnInit {
 
     @Input('source') url: string;
-    @Input('getSource') getURL: string;
+    @Input('method') method: string;
     @Input('sourceParams') sourceParams: any;
     @Input('model') data: KinibindModel;
     @Input('withCredentials') withCredentials: boolean;
@@ -128,10 +128,8 @@ export class KinibindBindDirective implements OnInit {
             postParams.page = this.data.pageOptions.index;
         }
 
-        if (this.getURL) {
-            return this.kbRequest.makeGetRequest(this.getURL);
-        } else {
-            return this.kbRequest.makePostRequest(this.url, postParams);
-        }
+        const method = this.method ? this.method : 'GET';
+
+        return this.kbRequest.makeRequest(method, this.url, {params: postParams});
     }
 }

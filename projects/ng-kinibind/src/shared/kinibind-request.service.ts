@@ -12,6 +12,10 @@ export class KinibindRequestService {
         this.jsonpRequestError = new EventEmitter<HttpErrorResponse>();
     }
 
+    public makeRequest(method: string, url: string, options: any = {}) {
+        return this.http.request(method, url, options);
+    }
+
     public makePostRequest(url: string, params: any, options: any = {}) {
         return this.http.post(url, params, options);
     }

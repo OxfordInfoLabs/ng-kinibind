@@ -1,0 +1,9 @@
+.doc{
+    padding: 20px;
+}
+.doc-container {
+    padding: 50px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 20px 0;
+}

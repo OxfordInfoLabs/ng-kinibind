@@ -25,18 +25,46 @@
 
     </div>
 
-    <div id="bind">
+    <div class="doc" id="bind">
 
         <h1>Bind</h1>
+        <p>Simple AJAX request binding to model in the view.</p>
+
+        <div class="doc-container">
+            <p><span class="label label-primary">Example</span></p>
+
+            <p>In your component.ts create a reference to KinibindModel instance: <br>
+                <code>public bindModel: KinibindModel = new KinibindModel();</code>
+            </p>
+
+            <p>Pass this into the [model] property <br>
+                <code>&lt;kb-bind [model]="bindModel"&gt;</code>
+            </p>
+
+            <p>
+                Set your AJAX URL and method type (defaults to GET)<br>
+                <code>&lt;kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel"&gt;&lt;/kb-bind&gt;</code>
+            </p>
+
+            <p>The results of the AJAX request will be passed into <code>bindModel</code>.
+                Result can be accessed on the model as follows: <br>
+
+                <code>Array</code> <code>bindModel.results</code> <br>
+                <code>JSON</code> <code>bindModel.item</code> <br>
+                <code>String||Integer</code> <code>bindModel.value</code>
+            </p>
+
+            <p><span class="label label-primary">Results</span></p>
+
+            <kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel">
+                <dl *ngFor="let user of bindModel.results">
+                    <dt>{{user.name}}</dt>
+                    <dd>{{user.email}} <span class="label label-rounded label-primary">{{user.website}}</span></dd>
+                </dl>
+            </kb-bind>
+        </div>
 
 
-
-        <kb-bind getSource="https://jsonplaceholder.typicode.com/users" [model]="bindModel">
-            <dl *ngFor="let user of bindModel.results">
-                <dt>{{user.name}}</dt>
-                <dd>{{user.email}} <span class="label label-rounded label-primary">{{user.website}}</span></dd>
-            </dl>
-        </kb-bind>
 
     </div>
 

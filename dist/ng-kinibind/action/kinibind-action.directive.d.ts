@@ -15,6 +15,7 @@ import { KinibindRequestService } from '../shared/kinibind-request.service';
 export declare class KinibindActionDirective implements OnInit {
     private kbRequest;
     actionURL: string;
+    method: string;
     actionParams: any;
     started: EventEmitter<any>;
     completed: EventEmitter<any>;

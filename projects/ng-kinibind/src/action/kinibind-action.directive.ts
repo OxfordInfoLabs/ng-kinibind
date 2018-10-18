@@ -21,6 +21,7 @@ import { KinibindRequestService } from '../shared/kinibind-request.service';
 export class KinibindActionDirective implements OnInit {
 
     @Input('actionURL') actionURL: string;
+    @Input('method') method: string;
     @Input('actionParams') actionParams: any;
 
     @Output('started') started: EventEmitter<any> = new EventEmitter<any>();
@@ -32,9 +33,14 @@ export class KinibindActionDirective implements OnInit {
         event.preventDefault();
         event.stopPropagation();
         this.started.emit(true);
-        const postParams: any = this.actionParams || {};
 
-        this.kbRequest.makePostRequest(this.actionURL, postParams).toPromise()
+        const method = this.method ? this.method : (this.actionParams ? 'POST' : 'GET');
+
+        this.kbRequest.makeRequest(method, this.actionURL,
+            {
+                params: this.actionParams
+            })
+            .toPromise()
             .then(result => {
                 this.completed.emit(result);
             })

@@ -44,8 +44,7 @@ export declare class KinibindSaveDirective implements OnInit {
     private kbRequest;
     model: KinibindModel;
     storeURL: string;
-    storeParams: any;
-    storeObjectParam: string;
+    method: string;
     savedRoute: string;
     withCredentials: boolean;
     onSave: EventEmitter<any>;
