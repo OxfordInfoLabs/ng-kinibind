@@ -20,10 +20,8 @@ imports: [
 ### Components & Directives
 
 #### Action
-Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.
-
-##### Example
 ___
+Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.
 
 ##### Properties
 * actionURL (string) - the URL that the request should be made against.
@@ -35,7 +33,7 @@ ___
 * completed - fires when the action has finished
 * error - fires if there was an error making the request
 
-###### Full example
+##### Example
 
 ```html
 <button kbAction actionURL="/endpoint/users/1" method="DELETE" 
@@ -46,10 +44,8 @@ ___
 
 
 #### Bind
-Simple AJAX request directive, designed for rapid binding of simple AJAX requests in the view. Useful for rapid development or prototyping when simple structures need to be bound to the view.
-
-##### Example
 ___
+Simple AJAX request directive, designed for rapid binding of simple AJAX requests in the view. Useful for rapid development or prototyping when simple structures need to be bound to the view.
 
 ##### Properties
 * source (string) - the URL of the request
@@ -88,7 +84,7 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 |String|`bindModel.value`|
 |Number|`bindModel.value`|
 
-###### Full example
+##### Example
 
 ```html
 <kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel">
