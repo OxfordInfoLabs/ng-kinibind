@@ -19,7 +19,7 @@ imports: [
 
 ### Components & Directives
 
-#### Action
+### Action
 ___
 Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.
 
@@ -43,7 +43,7 @@ Perform an action on a given HTML element. Typical use case would be to perform 
 ```
 
 
-#### Bind
+### Bind
 ___
 Simple AJAX request directive, designed for rapid binding of simple AJAX requests in the view. Useful for rapid development or prototyping when simple structures need to be bound to the view.
 
