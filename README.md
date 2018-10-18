@@ -36,7 +36,7 @@ Perform an action on a given HTML element. Typical use case would be to perform 
 ##### Example
 
 ```html
-<button kbAction actionURL="/endpoint/users/1" method="DELETE" 
+<button kbAction actionURL="https://enpoint/users/1" method="DELETE" 
         (started)="isLoading = true" (completed)="reloadUsers()" (error)="userError = true"> 
         Delete User 1 
 </button>
@@ -72,7 +72,7 @@ Pass this into the [model] property of the `kb-bind` directive.
 
 Set your AJAX URL and method type (defaults to GET)
 ```html
-<kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel"></kb-bind>
+<kb-bind source="https://enpoint/users" method="GET" [model]="bindModel"></kb-bind>
 ```
 
 The result of the AJAX request will be passed into `bindModel`. Results can be accessed on the model as follows:
@@ -87,7 +87,7 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 ##### Example
 
 ```html
-<kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel">
+<kb-bind source="https://enpoint/users" method="GET" [model]="bindModel">
     <dl *ngFor="let user of bindModel.results">
         <dt>{{user.name}}</dt>
         <dd>{{user.email}} <span class="label label-rounded label-primary">{{user.website}}</span></dd>
@@ -96,8 +96,30 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 ```
 
 
-#### Bind Save
-* _coming soon_
+### Bind Save
+___
+If changes have been made to `bindModel: KinibindModel` and you want these changes to persist, you can send them back to the server using `kbSave`
+
+##### Properties
+* model (KinibindModel) - the model which has the changes you want to send back to the server.
+* store (string) - the server endpoint to send the model changes to. The full `bindModel.item` or `bindModel.results` will be sent as the payload back to the server.
+* method (string) - request method. Defaults to POST
+* savedRoute (? string) - if the http request returns successfully then the route provided will be navigated to.
+* withCredentials (? boolean) - whether the http request should also set withCredentials (defaults to false)
+
+##### Events
+* onSave - fires once the save has returned successful.
+* on Error - fires if an error is returned from the request
+
+##### Example
+
+```html
+<button kbSave store="https://enpoint/users" method="POST" [model]="bindModel"
+         savedRoute="/views/users" (onSave)="callMeOnSave()" (onError)="doSomething()">
+        Save User
+</button>
+```
+
 #### Filter
 * _coming soon_
 #### Filter Element
