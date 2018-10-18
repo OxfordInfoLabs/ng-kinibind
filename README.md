@@ -19,7 +19,7 @@ imports: [
 
 ### Components & Directives
 
-### Action
+### [kbAction]
 ___
 Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.
 
@@ -43,7 +43,7 @@ Perform an action on a given HTML element. Typical use case would be to perform 
 ```
 
 
-### Bind
+### kb-bind
 ___
 Simple AJAX request directive, designed for rapid binding of simple AJAX requests in the view. Useful for rapid development or prototyping when simple structures need to be bound to the view.
 
@@ -96,7 +96,7 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 ```
 
 
-### Bind Save
+### [kbSave]
 ___
 If changes have been made to `bindModel: KinibindModel` and you want these changes to persist, you can send them back to the server using `kbSave`
 
@@ -124,7 +124,60 @@ If changes have been made to `bindModel: KinibindModel` and you want these chang
 * _coming soon_
 #### Filter Element
 * _coming soon_
-#### Forms
-* _coming soon_
+
+
+### [kbForm]
+___
+
+Simple sourcing of form data from an external source using URL string. Combined with saving of data to server via http request on form submission.
+
+##### Properties
+* source (string) - the url to fetch the data from
+* sourceParams (? object) - POST params to send with the source for fetching data.
+* sourceMethod (? string) - request method type (defaults to GET)
+* model (KinibindModel) - the model to bind the data to and from
+* store (string) - the url that the model data should be sent to
+* storeMethod (?string) - request method type (defaults to POST)
+* savedRoute (? string) - the route to navigate to after successful save
+* dirtyOnly (? boolean) - only attempt a save if the model contains dirty fields (defaults to false)
+* withCredentials (? boolean) - whether the http request should also set withCredentials (defaults to false)
+
+##### Events
+* onLoad - fires once the data has been fetched from the server
+* onLoadError - fires if there was an error while fetching the data
+* onSave - fires once data has been sent to the server
+* onError - fires if there was an error while sending data to server
+
+##### Example
+
+```html
+<form kbForm [model]="formModel" source="https://endpoint/address/1"
+        store="https://endpoint/address/1" storeMethod="PUT"
+        savedRoute="/views/addresses" (onSave)="reloadAddresses()">
+ 
+      <div class="form-group">
+        <label>ID</label>
+        <input type="text" name="id" [(ngModel)]="formModel.item.id" required>
+      </div>
+     
+      <div class="form-group">
+        <label>Line 1</label>
+        <input type="text" name="line1" [(ngModel)]="formModel.item.line1">
+      </div>
+     
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" name="city" [(ngModel)]="formModel.item.city">
+      </div>
+     
+      <div class="form-group">
+        <label>Postcode</label>
+        <input type="text" name="postcode" [(ngModel)]="formModel.item.postcode">
+      </div>
+     
+      <button type="submit">Save</button>
+</form>
+```
+
 #### Validators
 * _coming soon_

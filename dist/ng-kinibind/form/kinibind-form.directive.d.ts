@@ -82,11 +82,11 @@ export declare class KinibindFormDirective implements OnInit {
     private router;
     private kbRequest;
     url: string;
+    sourceMethod: string;
     sourceParams: any;
     data: KinibindModel;
     storeURL: string;
-    storeParams: any;
-    storeObjectParam: string;
+    storeMethod: string;
     savedRoute: string;
     dirtyOnly: boolean;
     withCredentials: boolean;

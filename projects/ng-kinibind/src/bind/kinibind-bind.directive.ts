@@ -128,7 +128,7 @@ export class KinibindBindDirective implements OnInit {
             postParams.page = this.data.pageOptions.index;
         }
 
-        const method = this.method ? this.method : 'GET';
+        const method = this.method ? this.method : (this.sourceParams ? 'POST' : 'GET');
 
         return this.kbRequest.makeRequest(method, this.url, {params: postParams});
     }

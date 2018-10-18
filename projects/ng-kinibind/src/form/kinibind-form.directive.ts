@@ -90,11 +90,11 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 export class KinibindFormDirective implements OnInit {
 
     @Input('source') url: string;
+    @Input('sourceMethod') sourceMethod: string;
     @Input('sourceParams') sourceParams: any;
     @Input('model') data: KinibindModel;
     @Input('store') storeURL: string;
-    @Input('storeParams') storeParams: any;
-    @Input('storeObjectParam') storeObjectParam: string;
+    @Input('storeMethod') storeMethod: string;
     @Input('savedRoute') savedRoute: string;
     @Input('dirtyOnly') dirtyOnly: boolean;
     @Input('withCredentials') withCredentials: boolean;
@@ -147,24 +147,28 @@ export class KinibindFormDirective implements OnInit {
             } else {
                 this.data.results = data;
             }
-            this.onLoad.emit({success: true});
+            this.onLoad.emit({ success: true });
         });
     }
 
     private getData(): Observable<any> {
         const postParams: any = this.sourceParams || {};
 
-        if (this.data.filters.filterObject) {
+        if (!_.isEmpty(this.data.filters.filterObject)) {
             postParams.filters = this.data.filters.filterObject;
         }
 
-        if (this.data.pageOptions.size && this.data.pageOptions.index) {
-            const offset = this.data.pageOptions.size * this.data.pageOptions.index;
-            postParams.limit = this.data.pageOptions.size;
-            postParams.offset = offset;
+        if (this.data.pageOptions.size) {
+            postParams.pageSize = this.data.pageOptions.size;
+            postParams.page = this.data.pageOptions.index;
         }
 
-        return this.kbRequest.makePostRequest(this.url, postParams);
+        const method = this.sourceMethod ? this.sourceMethod : (this.sourceParams ? 'POST' : 'GET');
+
+        return this.kbRequest.makeRequest(method, this.url, {
+            params: this.sourceParams,
+            withCredentials: this.withCredentials
+        });
     }
 
     private initSaveData() {
@@ -193,7 +197,7 @@ export class KinibindFormDirective implements OnInit {
     }
 
     private saveData(dirty?) {
-        const postParams: any = this.storeParams || {};
+        let postParams = {};
 
         if (dirty) {
 
@@ -207,24 +211,31 @@ export class KinibindFormDirective implements OnInit {
                 dirtyObjects.push(this.data.results[dirtyIndex]);
             });
 
-            postParams[this.storeObjectParam || 'results'] = dirtyObjects;
+            postParams = dirtyObjects;
 
         } else {
             if (this.data.results.length > 0) {
-                postParams[this.storeObjectParam || 'results'] = this.data.results;
+                postParams = this.data.results;
             } else if (this.data.item) {
-                postParams[this.storeObjectParam || 'object'] = this.data.item;
+                postParams = this.data.item;
             }
         }
 
-        this.kbRequest.makePostRequest(this.storeURL, postParams).toPromise()
+        const method = this.storeMethod ? this.storeMethod : 'POST';
+
+        this.kbRequest.makeRequest(method, this.storeURL,
+            {
+                params: postParams,
+                withCredentials: this.withCredentials
+            })
+            .toPromise()
             .then(results => {
 
                 if (this.savedRoute) {
                     this.router.navigate([this.savedRoute]);
                 }
 
-                this.onSave.emit({results: results});
+                this.onSave.emit({ results: results });
             })
             .catch(error => {
                 this.onError.emit(error);
