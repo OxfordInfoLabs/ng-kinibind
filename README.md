@@ -87,11 +87,14 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 ##### Example
 
 ```html
-<kb-bind source="https://enpoint/users" method="GET" [model]="bindModel">
+<kb-bind source="https://enpoint/users" method="GET" [model]="bindModel" [withCredentials]="true"
+        [reloadTrigger]="userUpdate" (onLoad)="isLoading = false" (onLoadError)="showError = true">
+        
     <dl *ngFor="let user of bindModel.results">
         <dt>{{user.name}}</dt>
         <dd>{{user.email}} <span class="label label-rounded label-primary">{{user.website}}</span></dd>
     </dl>
+    
 </kb-bind>
 ```
 
