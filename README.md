@@ -19,7 +19,7 @@ imports: [
 
 ### KinibindModel
 
-ng-kinibind expects a model of type `KinibindModel` to be passed to the `[model]` attribute (where required). This ensures consistent behaviour when populating a model object from an http request.
+ng-kinibind expects a model of type `KinibindModel` to be passed to the `[model]` attribute (where required). This ensures consistent behaviour when binding the results from an http request to an object.
 
 ```typescript
 public bindModel: KinibindModel = new KinibindBindModel();
@@ -27,7 +27,7 @@ public bindModel: KinibindModel = new KinibindBindModel();
 
 KinibindModel exposes the following members.
 
-* results (array) - https request results when of type Array are populated against this member
+* results (array) - http request results of type Array are populated against this member
 * item (object) - http request results of type JSON Object are populated against this member
 * value (string | number) - http request results of either string or number type are populated against this member
 * totalCount (number) - in the case where `bindModel.results` is populated this will contain the count of results
