@@ -1,5 +1,6 @@
 {
   "name": "ng-kinibind",
+  "description": "Kinibind components and directives for the Angular framework.",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",

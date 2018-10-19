@@ -1,5 +1,5 @@
 # ng-kinibind
-Kinibind binders for use with the Angular framework.
+ng-kinibind is designed to assist in rapid development and rapid prototyping when working with the Angular framework. ng-kinibind contains a number of different directives and components to make http request binding in the view quicker and easier. ng-kinibind achieves this by allowing you to specify the url in HTML attribute markup, automatically binding the results to a pre defined model. This makes the results available to use in your view without having to write any Javascript. Great when working with simple sets of results/lists.
 
 ## Usage
 
