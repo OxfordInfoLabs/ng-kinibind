@@ -9,8 +9,10 @@ import { KinibindRequestService } from '../shared/kinibind-request.service';
 })
 export class NojsRemoteValidateDirective implements Validator {
     @Input('kbRemoteValidate') remoteValidate: string;
-    @Input('remoteObjectParam') remoteObjectParam: any;
-    @Input('remoteObjectParams') remoteObjectParams: any = {};
+    @Input('method') method: string;
+    @Input('key') key: string;
+    @Input('withCredentials') withCredentials: boolean = false;
+    @Input('remoteParams') remoteParams: any = {};
 
     constructor(private kbRequest: KinibindRequestService) {
 
@@ -24,9 +26,21 @@ export class NojsRemoteValidateDirective implements Validator {
     private remoteValidateValidator(remoteURL: string): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } => {
 
-            this.remoteObjectParams[this.remoteObjectParam] = control.value;
             if (control.value) {
-                return this.kbRequest.makePostRequest(remoteURL, this.remoteObjectParams).toPromise()
+
+                const method = this.method ? this.method : (this.remoteParams ? 'POST' : 'GET');
+
+                let url;
+                if (remoteURL.includes('?')) {
+                    url = remoteURL + `&${this.key}=${control.value}`;
+                } else {
+                    url = remoteURL + `?${this.key}=${control.value}`;
+                }
+
+                return this.kbRequest.makeRequest(method, url, {
+                    withCredentials: this.withCredentials,
+                    params: this.remoteParams
+                }).toPromise()
                     .then(valid => {
                         return !valid ? { 'remoteValidate': false } : null;
                     });

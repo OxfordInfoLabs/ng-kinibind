@@ -179,5 +179,37 @@ Simple sourcing of form data from an external source using URL string. Combined 
 </form>
 ```
 
-#### Validators
-* _coming soon_
+### Validators
+___
+
+Custom input field validators.
+
+#### [kbMatchRegex]
+
+Validate the field using a Regex string.
+
+```html
+<div class="form-group">
+    <label>Website</label>
+    <input type="text" name="website" [(ngModel)]="formModel.item.website" kbMatchRegex="^(http|https)://">
+</div>
+```
+
+#### [kbRemoteValidate]
+
+Validate the value of the input field against a remote http request.
+
+##### Properties
+* key (string) - the name of the key to assign the value of the field in the request param.
+* method (? string) - request method type (defaults to GET if no post params supplied)
+* withCredentials (? boolean) - whether the http request should also set withCredentials (defaults to false)
+* remoteParams (? object) - additional post params to be sent with the request
+
+
+```html
+<div class="form-group">
+    <label>Username</label>
+    <input type="text" name="username" [(ngModel)]="formModel.item.username" 
+            kbRemoteValidate="https://endpoint/usernameAvailable" key="username">
+</div>
+```
