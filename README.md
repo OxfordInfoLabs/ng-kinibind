@@ -17,6 +17,21 @@ imports: [
 ]
 ```
 
+### KinibindModel
+
+ng-kinibind expects a model of type `KinibindModel` to be passed to the `[model]` attribute (where required). This ensures consistent behaviour when populating a model object from an http request.
+
+```typescript
+public bindModel: KinibindModel = new KinibindBindModel();
+```
+
+KinibindModel exposes the following members.
+
+* results (array) - https request results when of type Array are populated against this member
+* item (object) - http request results of type JSON Object are populated against this member
+* value (string | number) - http request results of either string or number type are populated against this member
+* totalCount (number) - in the case where `bindModel.results` is populated this will contain the count of results
+
 ### Components & Directives
 
 ### [kbAction]
@@ -59,31 +74,6 @@ Simple AJAX request directive, designed for rapid binding of simple AJAX request
 * onLoad - fires if the request completes successfully
 * onLoadError - fires if there was an error making the http request
 
-
-In your component.ts create an instance KinibindModel object.
-```typescript
-public bindModel: KinibindModel = new KinibindBindModel();
-```
-
-Pass this into the [model] property of the `kb-bind` directive.
-```html
-<kb-bind [model]="bindModel">
-```
-
-Set your AJAX URL and method type (defaults to GET)
-```html
-<kb-bind source="https://enpoint/users" method="GET" [model]="bindModel"></kb-bind>
-```
-
-The result of the AJAX request will be passed into `bindModel`. Results can be accessed on the model as follows:
-
-|Type|Member|
-|:---:|:------:|
-|Array|`bindModel.results`|
-|Object|`bindModel.item`|
-|String|`bindModel.value`|
-|Number|`bindModel.value`|
-
 ##### Example
 
 ```html
@@ -98,6 +88,14 @@ The result of the AJAX request will be passed into `bindModel`. Results can be a
 </kb-bind>
 ```
 
+The result of the AJAX request will be passed into `bindModel`. Results can be accessed on the model as follows:
+
+|Type|Member|
+|:---:|:------:|
+|Array|`bindModel.results`|
+|Object|`bindModel.item`|
+|String|`bindModel.value`|
+|Number|`bindModel.value`|
 
 ### [kbSave]
 ___
