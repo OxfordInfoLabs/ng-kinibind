@@ -22,15 +22,13 @@ imports: [
 ng-kinibind expects a model of type `KinibindModel` to be passed to the `[model]` attribute (where required). This ensures consistent behaviour when binding the results from an http request to an object.
 
 ```typescript
-public bindModel: KinibindModel = new KinibindBindModel();
+public bindModel: KinibindModel = new KinibindModel();
 ```
 
 KinibindModel exposes the following members.
 
-* results (array) - http request results of type Array are populated against this member
-* item (object) - http request results of type JSON Object are populated against this member
-* value (string | number) - http request results of either string or number type are populated against this member
-* totalCount (number) - in the case where `bindModel.results` is populated this will contain the count of results
+* data (any) - http request results are populated against this member
+* totalCount (number) - in the case where `bindModel.data` is of type Array, this will contain the count of results
 
 ### Components & Directives
 
@@ -42,6 +40,7 @@ Perform an action on a given HTML element. Typical use case would be to perform 
 * actionURL (string) - the URL that the request should be made against.
 * method (string) - the method type used in the request
 * actionParams (? object) - any parameters that should be sent with the request as POST params.
+* successRoute (? string) - the route to navigate to after the action has completed successfully. (Note: will not fire completed event if this is set)
 
 ##### Events
 * started - fires when the action begins
@@ -88,14 +87,25 @@ Simple AJAX request directive, designed for rapid binding of simple AJAX request
 </kb-bind>
 ```
 
-The result of the AJAX request will be passed into `bindModel`. Results can be accessed on the model as follows:
+The result of the http request will be passed into `bindModel`. Results of the request will be bound to `bindModel.data`. 
 
-|Type|Member|
-|:---:|:------:|
-|Array|`bindModel.results`|
-|Object|`bindModel.item`|
-|String|`bindModel.value`|
-|Number|`bindModel.value`|
+It is possible to initialise the value of `bindModel.data` upon construction of the model as follows...
+```typescript
+public bindModel: KinibindModel = new KinibindModel({test: data});
+```
+
+##### Paging results
+
+If you need to page the results coming back from your http request due to large result sets, then you can also pass these into the model at construction. These values will be sent in the payload of the http request as {pageSize: 10, page: 1}
+```typescript
+public bindModel: KinibindModel = new KinibindModel({test: data}, 10, 1);
+```
+
+Further updates to page size and index can be achieved by calling setPageOptions on the model itself as follows...
+```typescript
+bindModel.setPageOptions(10, 2); 
+```
+This will then trigger a reload of the http request passing the new paging rules in the payload, and binding the returned values back to `bindModel.data`;
 
 ### [kbSave]
 ___

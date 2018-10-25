@@ -18,9 +18,9 @@ import { catchError } from 'rxjs/operators';
  * @tag nojs-bind
  * @templateData attributeData
  *
- * @description The NoJS Bind Directive allows for rapid binding of a JSON data source to a model. This should primarily be used for drawing lists of data, where the data does not change as the result of user input. However, this can be used in conjunction with nojsBindSave to send any model changes back to the server. If you are looking to implement Form behaviour, then use nojsForm.
+ * @description The NoJS Bind Directive allows for rapid binding of a JSON model source to a model. This should primarily be used for drawing lists of model, where the model does not change as the result of user input. However, this can be used in conjunction with nojsBindSave to send any model changes back to the server. If you are looking to implement Form behaviour, then use nojsForm.
  *
- * @attributes-source-description The URL to load the data asynchronously. Data should be returned in JSON format as either:
+ * @attributes-source-description The URL to load the model asynchronously. Data should be returned in JSON format as either:
  * @attributes-source-type String
  * @attributes-source-value https://someservice/results.json
  * @attributes-source-code {id: 1, name: testing} OR<br>[{id: 1, name: test1}, {id: 2, name: test2}] OR<br>{results: [{id: 1...}, {id: 2...}], totalCount: 2}
@@ -29,18 +29,18 @@ import { catchError } from 'rxjs/operators';
  * @attributes-sourceParams-value {param: value}
  * @attributes-model-description The object that the results from the source will bind itself to.
  * @attributes-model-type NojsBindModel
- * @attributes-model-value data
- * @attributes-onLoad-description Event raised once the data has been loaded successfully.
+ * @attributes-model-value model
+ * @attributes-onLoad-description Event raised once the model has been loaded successfully.
  * @attributes-onLoad-type method
- * @attributes-onLoadError-description Event raised in the scenario where there is an error loading the data.
+ * @attributes-onLoadError-description Event raised in the scenario where there is an error loading the model.
  * @attributes-onLoadError-type method
  *
  *
  * @exampleDescription Create an element using the <nojs-bind> tag
  * <nojs-bind source="https://someservice/results.json" [sourceParams]="{userId: 100}"
- *   [model]="data">
+ *   [model]="model">
  *
- *   <div *ngFor="let item of data.results">
+ *   <div *ngFor="let item of model.model">
  *     <span>{{item.id}}</span>
  *     <span>{item.name}}</span>
  *     <span>{{item.date}}</span>
@@ -58,7 +58,7 @@ export class KinibindBindDirective implements OnInit {
     @Input('source') url: string;
     @Input('method') method: string;
     @Input('sourceParams') sourceParams: any;
-    @Input('model') data: KinibindModel;
+    @Input('model') model: KinibindModel;
     @Input('withCredentials') withCredentials: boolean;
     @Input('reloadTrigger') reloadTrigger: EventEmitter<any> = new EventEmitter<any>();
 
@@ -71,15 +71,15 @@ export class KinibindBindDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        // If we have a reload trigger listen for changes and reset the data model.
+        // If we have a reload trigger listen for changes and reset the model model.
         this.reloadTrigger.subscribe(() => {
-            this.data.filters.filterObject = {};
-            this.data.pageOptions.index = 1;
+            this.model.filters.filterObject = {};
+            this.model.pageOptions.index = 1;
         });
 
-        this.data.filters.changes.subscribe(() => this.data.pageOptions.index = 1);
+        this.model.filters.changes.subscribe(() => this.model.pageOptions.index = 1);
 
-        merge(this.data.filters.changes, this.data.pageOptions.changes, this.reloadTrigger)
+        merge(this.model.filters.changes, this.model.pageOptions.changes, this.reloadTrigger)
             .pipe(
                 startWith({}),
                 switchMap(() => {
@@ -88,30 +88,21 @@ export class KinibindBindDirective implements OnInit {
                 map((data: any) => {
                     if (_.isPlainObject(data)) {
                         if (data.results && _.isArray(data.results)) {
-                            this.data.totalCount = data.totalCount || data.results.length;
+                            this.model.totalCount = data.totalCount || data.results.length;
                             return data.results;
-                        } else {
-                            return data;
                         }
                     } else if (_.isArray(data)) {
-                        this.data.totalCount = data.length;
-                        return data;
-                    } else {
-                        return data;
+                        this.model.totalCount = data.length;
                     }
+
+                    return data;
                 }),
                 catchError((error) => {
                     this.onLoadError.emit(error);
                     return of([]);
                 })
             ).subscribe(data => {
-            if (_.isPlainObject(data)) {
-                this.data.item = data;
-            } else if (_.isArray(data)) {
-                this.data.results = data;
-            } else {
-                this.data.value = data;
-            }
+            this.model.data = data;
             this.onLoad.emit({ success: true });
         });
     }
@@ -119,13 +110,13 @@ export class KinibindBindDirective implements OnInit {
     private getData(): Observable<any> {
         const postParams: any = this.sourceParams || {};
 
-        if (!_.isEmpty(this.data.filters.filterObject)) {
-            postParams.filters = this.data.filters.filterObject;
+        if (!_.isEmpty(this.model.filters.filterObject)) {
+            postParams.filters = this.model.filters.filterObject;
         }
 
-        if (this.data.pageOptions.size) {
-            postParams.pageSize = this.data.pageOptions.size;
-            postParams.page = this.data.pageOptions.index;
+        if (this.model.pageOptions.size) {
+            postParams.pageSize = this.model.pageOptions.size;
+            postParams.page = this.model.pageOptions.index;
         }
 
         const method = this.method ? this.method : (this.sourceParams ? 'POST' : 'GET');

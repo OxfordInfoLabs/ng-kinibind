@@ -12,7 +12,7 @@ export interface KinibindPageOptions {
 /**
  * @name KinibindModel
  * @docType Model
- * @description This is the Model that nojs-bind, nojs-filter, nojs-paginator, and nojs-filter-element bind to. It provides a structure that allows for each of these nojs components to manage their own state and data handling.
+ * @description This is the Model that nojs-bind, nojs-filter, nojs-paginator, and nojs-filter-element bind to. It provides a structure that allows for each of these nojs components to manage their own state and model handling.
  * @templateData memberData
  *
  * @members-results-type property: any[]
@@ -40,13 +40,11 @@ export interface KinibindPageOptions {
  * const bindModel = new NojsBindModel();
  */
 export declare class KinibindModel {
-    results: any[];
-    item: any;
-    value: any;
+    data: any;
     totalCount: number;
     offset: number;
     filters: KinibindFilters;
     pageOptions: KinibindPageOptions;
-    constructor(limit?: number, offset?: number);
+    constructor(data?: any, limit?: number, offset?: number);
     setPageOptions(pageSize: any, pageIndex: any): void;
 }

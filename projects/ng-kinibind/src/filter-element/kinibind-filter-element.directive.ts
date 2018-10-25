@@ -7,11 +7,11 @@ import { KinibindModel } from '../shared/kinibind.model';
  * @tag [nojsFilterElement]
  * @templateData attributeData
  *
- * @description Allow for an input element to perform custom filtering on the associated bound data.
+ * @description Allow for an input element to perform custom filtering on the associated bound model.
  *
  * @attributes-model-description The object that the results from the source will bind itself to.
  * @attributes-model-type NojsBindModel
- * @attributes-model-value data
+ * @attributes-model-value model
  * @attributes-filter-description The name of the type of filtering applied to this element. (Currently only 'search' is supported)
  * @attributes-filter-type String
  * @attributes-prefix-description Specify a prefix to apply to the filter
@@ -22,7 +22,7 @@ import { KinibindModel } from '../shared/kinibind.model';
  * @attributes-columns-type String
  *
  *
- * <input type='text' #element filterElement [model]='data' filter='search'
+ * <input type='text' #element filterElement [model]='model' filter='search'
  * columns='id,buyer_name' prefix='*' suffix='*' placeholder='Search Orders'>
  */
 @Directive({
@@ -31,7 +31,7 @@ import { KinibindModel } from '../shared/kinibind.model';
 })
 export class KinibindFilterElementDirective {
 
-    @Input('model') data: KinibindModel;
+    @Input('model') model: KinibindModel;
     @Input('filter') filter: string;
     @Input('prefix') prefix: string;
     @Input('suffix') suffix: string;
@@ -55,7 +55,7 @@ export class KinibindFilterElementDirective {
 
     private constructFilterObject(filterValue) {
         if (filterValue === null) {
-            delete this.data.filters.filterObject[this.filter];
+            delete this.model.filters.filterObject[this.filter];
         } else {
             let newValue = filterValue;
             if (this.prefix) {
@@ -66,20 +66,20 @@ export class KinibindFilterElementDirective {
                 newValue = newValue + this.suffix;
             }
 
-            this.data.filters.filterObject[this.filter] = {
+            this.model.filters.filterObject[this.filter] = {
                 filterValue: newValue,
                 filterColumns: this.columns ? this.columns.split(',') : []
             };
 
             if (this.mode) {
-                this.data.filters.filterObject[this.filter].filterMode = this.mode;
+                this.model.filters.filterObject[this.filter].filterMode = this.mode;
             }
 
             if (this.dateFormat) {
-                this.data.filters.filterObject[this.filter].filterDateFormat = this.dateFormat;
+                this.model.filters.filterObject[this.filter].filterDateFormat = this.dateFormat;
             }
         }
 
-        this.data.filters.changes.next(true);
+        this.model.filters.changes.next(true);
     }
 }

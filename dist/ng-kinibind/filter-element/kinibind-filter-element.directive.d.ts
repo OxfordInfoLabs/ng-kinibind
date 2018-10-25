@@ -5,11 +5,11 @@ import { KinibindModel } from '../shared/kinibind.model';
  * @tag [nojsFilterElement]
  * @templateData attributeData
  *
- * @description Allow for an input element to perform custom filtering on the associated bound data.
+ * @description Allow for an input element to perform custom filtering on the associated bound model.
  *
  * @attributes-model-description The object that the results from the source will bind itself to.
  * @attributes-model-type NojsBindModel
- * @attributes-model-value data
+ * @attributes-model-value model
  * @attributes-filter-description The name of the type of filtering applied to this element. (Currently only 'search' is supported)
  * @attributes-filter-type String
  * @attributes-prefix-description Specify a prefix to apply to the filter
@@ -20,11 +20,11 @@ import { KinibindModel } from '../shared/kinibind.model';
  * @attributes-columns-type String
  *
  *
- * <input type='text' #element filterElement [model]='data' filter='search'
+ * <input type='text' #element filterElement [model]='model' filter='search'
  * columns='id,buyer_name' prefix='*' suffix='*' placeholder='Search Orders'>
  */
 export declare class KinibindFilterElementDirective {
-    data: KinibindModel;
+    model: KinibindModel;
     filter: string;
     prefix: string;
     suffix: string;

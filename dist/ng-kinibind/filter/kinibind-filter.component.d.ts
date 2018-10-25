@@ -7,15 +7,15 @@ import { KinibindRequestService } from '../shared/kinibind-request.service';
  * @tag nojs-filter
  * @templateData attributeData
  *
- * @description Filtering component that generates filter options based on the passed in source. Selecting any of these options will update the filter object from [model] which will trigger a server side filter of the data.
+ * @description Filtering component that generates filter options based on the passed in source. Selecting any of these options will update the filter object from [model] which will trigger a server side filter of the model.
  *
- * @attributes-source-description The URL to call to retrieve the filter options from the server. Return data expected in the following format:
+ * @attributes-source-description The URL to call to retrieve the filter options from the server. Return model expected in the following format:
  * @attributes-source-type String
  * @attributes-source-value https://someservice/filters.json
  * @attributes-source-code [{count: 2, label: Option1: value: 1},<br>{count: 4, label: Option2: value: 2}]
  * @attributes-model-description The object that the results from the source will bind itself to.
  * @attributes-model-type NojsBindModel
- * @attributes-model-value data
+ * @attributes-model-value model
  * @attributes-multiple-description Allow multiple filter options to be selected at the same time.
  * @attributes-multiple-type Boolean
  * @attributes-filter-description The name of the database field that the filter will be applied to.
@@ -28,13 +28,13 @@ import { KinibindRequestService } from '../shared/kinibind-request.service';
  *
  * <nojs-filter source="https://someservice/filters.json"
  * [initialFilterValues]="{complete: true}"
- * [model]="data" multiple="true" filter="total" showCount="true">
+ * [model]="model" multiple="true" filter="total" showCount="true">
  * </nojs-filter>
  */
 export declare class KinibindFilterComponent implements OnInit {
     private kbRequest;
     url: string;
-    data: KinibindModel;
+    model: KinibindModel;
     multiple: boolean;
     showCount: boolean;
     filter: string;
