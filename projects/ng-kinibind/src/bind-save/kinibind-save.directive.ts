@@ -85,8 +85,9 @@ export class KinibindSaveDirective implements OnInit {
 
         this.kbRequest.makeRequest(method, this.storeURL,
             {
-                withCredentials: this.withCredentials || false,
-                params: postParams
+                body: method === 'GET' ? null : postParams,
+                params: method === 'GET' ? postParams : null,
+                withCredentials: this.withCredentials || false
             })
             .toPromise()
             .then(results => {

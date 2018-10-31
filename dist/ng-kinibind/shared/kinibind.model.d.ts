@@ -45,6 +45,6 @@ export declare class KinibindModel {
     offset: number;
     filters: KinibindFilters;
     pageOptions: KinibindPageOptions;
-    constructor(data?: any, limit?: number, offset?: number);
+    constructor(data?: any, pageSize?: number, page?: number);
     setPageOptions(pageSize: any, pageIndex: any): void;
 }

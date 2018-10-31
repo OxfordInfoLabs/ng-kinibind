@@ -221,7 +221,8 @@ export class KinibindFormDirective implements OnInit {
 
         this.kbRequest.makeRequest(method, this.storeURL,
             {
-                params: postParams,
+                body: method === 'GET' ? null : postParams,
+                params: method === 'GET' ? postParams : null,
                 withCredentials: this.withCredentials
             })
             .toPromise()
