@@ -12,19 +12,19 @@ export class KinibindRequestService {
         this.jsonpRequestError = new EventEmitter<HttpErrorResponse>();
     }
 
-    public makeRequest(method: string, url: string, options: any = {}) {
+    public makeRequest(method: string, url: string, options: any = {}): Observable<any> {
         return this.http.request(method, url, options);
     }
 
-    public makePostRequest(url: string, params: any, options: any = {}) {
+    public makePostRequest(url: string, params: any, options: any = {}): Observable<any> {
         return this.http.post(url, params, options);
     }
 
-    public makeGetRequest(url: string, options: any = {}) {
+    public makeGetRequest(url: string, options: any = {}): Observable<any> {
         return this.http.get(url, options);
     }
 
-    public makeJsonpRequest(url: string, params: any) {
+    public makeJsonpRequest(url: string, params: any): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const options: any = { headers: headers };
 
