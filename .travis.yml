@@ -14,7 +14,7 @@ script:
   - npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
 
 after_success:
-  - "../trigger_travis_build.sh ng-kinicart"
+  - "./trigger_travis_build.sh ng-kinicart"
 
 notifications:
   slack:
