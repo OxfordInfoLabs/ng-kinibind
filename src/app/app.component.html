@@ -1,128 +1,20 @@
-<header class="navbar">
-
-    <section class="navbar-center">
-
-        <a href="#action" class="btn btn-link">Action</a>
-        <a href="#bind" class="btn btn-link">Bind</a>
-        <a href="#bindSave" class="btn btn-link">Bind Save</a>
-        <a href="#filter" class="btn btn-link">Filter</a>
-        <a href="#filterElement" class="btn btn-link">Filter Element</a>
-        <a href="#forms" class="btn btn-link">Forms</a>
-        <a href="#validators" class="btn btn-link">Validators</a>
-
-    </section>
-
-</header>
-
-<div class="container">
-
-
-    <div class="doc" id="action">
-
-        <h1>Action</h1>
-        <p>Perform an action on a given HTML element. Typical use case would be to perform an AJAX request on click of a button.</p>
-
-        <div class="doc-container">
-            <p><span class="label label-primary">Example</span></p>
-
-            <p>Use the following mark to perform an action when the button gets clicked. <br>
-
-                <code>
-                    &lt;button kbAction actionURL="/endpoint/users/1" method="DELETE"
-                            (started)="isLoading = true"
-                            (completed)="reloadUsers()"
-                            (error)="userError = true"&gt;
-                        Delete User 1
-                    &lt;/button&gt;
-                </code>
-
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="doc" id="bind">
-
-        <h1>Bind</h1>
-        <p>Simple AJAX request binding to model in the view.</p>
-
-        <div class="doc-container">
-            <p><span class="label label-primary">Example</span></p>
-
-            <p>In your component.ts create a reference to KinibindModel instance: <br>
-                <code>public bindModel: KinibindModel = new KinibindModel();</code>
-            </p>
-
-            <p>Pass this into the [model] property <br>
-                <code>&lt;kb-bind [model]="bindModel"&gt;</code>
-            </p>
-
-            <p>
-                Set your AJAX URL and method type (defaults to GET)<br>
-                <code>&lt;kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel"&gt;&lt;/kb-bind&gt;</code>
-            </p>
-
-            <p>The results of the AJAX request will be passed into <code>bindModel</code>.
-                Result can be accessed on the model as follows: <br>
-
-                <code>Array</code> <code>bindModel.results</code> <br>
-                <code>JSON</code> <code>bindModel.item</code> <br>
-                <code>String||Integer</code> <code>bindModel.value</code>
-            </p>
-
-            <p><span class="label label-primary">Results</span></p>
-
-            <kb-bind source="https://jsonplaceholder.typicode.com/users" method="GET" [model]="bindModel">
-                <dl *ngFor="let user of bindModel.results">
-                    <dt>{{user.name}}</dt>
-                    <dd>{{user.email}} <span class="label label-rounded label-primary">{{user.website}}</span></dd>
-                </dl>
-            </kb-bind>
-        </div>
-
-
-
-    </div>
-
-    <div id="bindSave">
-
-        <h1>Bind Save</h1>
-
-
-
-    </div>
-
-    <div id="filter">
-
-        <h1>Filter</h1>
-
-
-
-    </div>
-
-    <div id="filterElement">
-
-        <h1>Filter Element</h1>
-
-
-
-    </div>
-
-    <div id="forms">
-
-        <h1>Forms</h1>
-
-
-
-    </div>
-
-    <div id="validators">
-
-        <h1>Validators</h1>
-
-
-
-    </div>
-
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
+<h2>Here are some links to help you start: </h2>
+<ul>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+  </li>
+</ul>
+
